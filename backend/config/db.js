@@ -1,4 +1,4 @@
-//const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 
 const {MongoClient} = require('mongodb');
 
@@ -31,6 +31,16 @@ async function listDatabases(client){
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 };
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(uri)
+    console.log(`mongo connected: ${conn.connection.host}`.cyan.underline)
+  } catch (err) {
+    console.log(err)
+    process.exit(1)
+  }
+}
 
 
-module.exports = main
+
+module.exports = {main, connectDB}

@@ -1,18 +1,21 @@
 const express = require("express")
 const dotenv =  require("dotenv").config()
 const port = process.env['port'] | 5000
-//const cors = require('cors');
+const cors = require('cors');
 const colors = require("colors")
 const {errorHandler} = require("./middleware/errorMiddleware")
 
-const main = require("./config/db.js")
+const {main, connectDB} = require("./config/db.js")
 
-main().catch(console.error);
+
+//main().catch(console.error);
+
+connectDB()
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-//app.use(cors());
+app.use(cors());
 
 app.use(errorHandler)
 
